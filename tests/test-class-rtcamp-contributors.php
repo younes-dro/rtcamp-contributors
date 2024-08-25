@@ -46,4 +46,15 @@ class Test_RTCamp_Contributors extends WP_UnitTestCase {
 		$this->assertCount( 1, $contributors, 'There should be exactly one contributor.' );
 		$this->assertEquals( $user, $contributors[0], 'The contributor should match the assigned user.' );
 	}
+
+    /**
+     * Test saving a post without assigning any contributors.
+     */
+    public function test_no_contributors_assigned() {
+        $post_id = $this->factory->post->create();
+
+        $contributors = get_post_meta($post_id, '_rtcamp_contributors', true);
+
+        $this->assertEmpty($contributors, 'There should be no contributors assigned to the post.');
+    }    
 }
