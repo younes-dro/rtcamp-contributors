@@ -26,10 +26,11 @@ A WordPress plugin to display more than one author name on a post. This plugin a
 ## Screenshots
 
 ### Contributor Selection in Post Editor
-![Contributor Selection](path_to_screenshot_1)
+![Contributor Selection](https://github.com/user-attachments/assets/ff3e1b2e-0385-4656-a21e-5cadbc3aa27f)
+
 
 ### Contributors Displayed in Post
-![Contributors Display](path_to_screenshot_2)
+![Contributors Display](https://github.com/user-attachments/assets/b5c2b982-bf5a-4b66-9e72-d01331846bca)
 
 ## Testing
 
