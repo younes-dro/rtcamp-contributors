@@ -1,4 +1,16 @@
 <?php
+/**
+ * RTCamp Contributors Main Class File.
+ *
+ * This file contains the main class for the RTCamp Contributors plugin,
+ * handling core functionalities such as initialization, environment checks,
+ * and admin notices.
+ *
+ * @package rtcamp-contributors
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Younes DRO <younesdro@gmail.com>
+ */
 
 /**
  * Main RTCamp_Contributors Class.
@@ -95,8 +107,9 @@ class RTCamp_Contributors {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'You cannot clone instances of this class.', 'rtcamp-contributors' ), $this->plugin_version );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'You cannot clone instances of this class.', 'rtcamp-contributors' ), esc_html( $this->plugin_version ) );
 	}
+
 
 	/**
 	 * Unserializing instances is forbidden due to the singleton pattern.
@@ -104,7 +117,7 @@ class RTCamp_Contributors {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'You cannot unserialize instances of this class.', 'rtcamp-contributors' ), $this->plugin_version );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'You cannot unserialize instances of this class.', 'rtcamp-contributors' ), esc_html( $this->plugin_version ) );
 	}
 
 	/**
@@ -115,9 +128,11 @@ class RTCamp_Contributors {
 	public function activation_check() {
 		if ( ! self::$dependencies->check_php_version() ) {
 			$this->deactivate_plugin();
-			wp_die( esc_html( $this->plugin_name ) . esc_html__( ' could not be activated. ', 'rtcamp-contributors' ) . self::$dependencies->get_php_notice() );
+			$message = esc_html( $this->plugin_name ) . ' ' . esc_html__( 'could not be activated.', 'rtcamp-contributors' ) . ' ' . esc_html( self::$dependencies->get_php_notice() );
+			wp_die( esc_html( $message ) );
 		}
 	}
+
 
 	/**
 	 * Checks the environment on loading WordPress, just in case the environment changes after activation.
@@ -141,6 +156,9 @@ class RTCamp_Contributors {
 	 * @since 1.0.0
 	 */
 	protected function deactivate_plugin() {
+
+		check_admin_referer( 'deactivate-plugin_' . plugin_basename( __FILE__ ) );
+
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 
 		if ( isset( $_GET['activate'] ) ) {
@@ -148,18 +166,19 @@ class RTCamp_Contributors {
 		}
 	}
 
+
 	/**
 	 * Adds an admin notice to be displayed.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $slug    Message slug.
-	 * @param string $class   CSS classes.
+	 * @param string $css_class   CSS classes.
 	 * @param string $message Notice message.
 	 */
-	public function add_admin_notice( $slug, $class, $message ) {
+	public function add_admin_notice( $slug, $css_class, $message ) {
 		$this->notices[ $slug ] = array(
-			'class'   => $class,
+			'class'   => $css_class,
 			'message' => $message,
 		);
 	}
