@@ -10,7 +10,6 @@
  * Version:         1.0.0
  *
  * @package         rtcamp-contributors
- * 
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -201,17 +200,20 @@ class RTCamp_Contributors {
 	 */
 	public function admin_notices() {
 		foreach ( (array) $this->notices as $notice_key => $notice ) {
-			echo '<div class="' . esc_attr( $notice['class'] ) . '"><p>';
-			echo wp_kses(
-				$notice['message'],
-				array(
-					'a'      => array( 'href' => array() ),
-					'strong' => array(),
+			printf(
+				'<div class="%1$s"><p>%2$s</p></div>',
+				esc_attr( $notice['class'] ),
+				wp_kses(
+					$notice['message'],
+					array(
+						'a'      => array( 'href' => array() ),
+						'strong' => array(),
+					)
 				)
 			);
-			echo '</p></div>';
 		}
 	}
+
 
 	/**
 	 * Initializes the plugin.
@@ -326,7 +328,6 @@ class RTCamp_Contributors {
 	public function load_textdomain() {
 		load_plugin_textdomain( 'rtcamp-contributors', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
-
 }
 
 /**
@@ -334,10 +335,10 @@ class RTCamp_Contributors {
  *
  * @return RTCamp_Contributors
  */
-function rtcamp_contributors() {
+function rtcamp_contributors_starter() {
 	RTCamp_Contributors::register_autoloader();
 	return RTCamp_Contributors::start( new RTCamp_Contributors_Dependencies() );
 }
 
 // Initialize the plugin.
-rtcamp_contributors();
+rtcamp_contributors_starter();
