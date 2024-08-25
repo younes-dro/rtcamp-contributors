@@ -59,10 +59,10 @@ function rtcamp_autoloader( $class_name ) {
  *
  * @return RTCamp_Contributors The main instance of the plugin class.
  */
-function rtcamp_contributors_starter() {
+function rtcamp_contributors_init() {
 	rtcamp_register_autoloader();
-	return RTCamp_Contributors::start_instance( new RTCamp_Contributors_Dependencies() );
+	return RTCamp_Contributors::start( new RTCamp_Contributors_Dependencies() );
 }
 
 // Initialize the plugin.
-rtcamp_contributors_starter();
+rtcamp_contributors_init();
